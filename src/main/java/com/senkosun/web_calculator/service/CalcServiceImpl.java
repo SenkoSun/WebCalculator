@@ -9,7 +9,7 @@ public class CalcServiceImpl implements CalcService{
     }
 
     @Override
-    public Deque<String> convertInRPN(String expression) {
+    public Deque<String> convertToRPN(String expression) {
         return null;
     }
 

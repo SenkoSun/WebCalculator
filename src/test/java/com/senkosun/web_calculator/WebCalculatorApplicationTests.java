@@ -89,89 +89,89 @@ class WebCalculatorApplicationTests {
 	}
 
 	@Test
-	@DisplayName("Single number")
+	@DisplayName("ConvertToRpn Single number")
 	void testSingleNumber() {
-		Deque<String> result = calculator.convertInRPN("42");
+		Deque<String> result = calculator.convertToRPN("42");
 		Deque<String> expected = new ArrayDeque<>(List.of("42"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Addition")
+	@DisplayName("ConvertToRpn Addition")
 	void testAddition() {
-		Deque<String> result = calculator.convertInRPN("2+3");
+		Deque<String> result = calculator.convertToRPN("2+3");
 		Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "+"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Subtraction")
+	@DisplayName("ConvertToRpn Subtraction")
 	void testSubtraction() {
-		Deque<String> result = calculator.convertInRPN("5-2");
+		Deque<String> result = calculator.convertToRPN("5-2");
 		Deque<String> expected = new ArrayDeque<>(List.of("5", "2", "-"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Multiplication")
+	@DisplayName("ConvertToRpn Multiplication")
 	void testMultiplication() {
-		Deque<String> result = calculator.convertInRPN("4*3");
+		Deque<String> result = calculator.convertToRPN("4*3");
 		Deque<String> expected = new ArrayDeque<>(List.of("4", "3", "*"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Division")
+	@DisplayName("ConvertToRpn Division")
 	void testDivision() {
-		Deque<String> result = calculator.convertInRPN("10/2");
+		Deque<String> result = calculator.convertToRPN("10/2");
 		Deque<String> expected = new ArrayDeque<>(List.of("10", "2", "/"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Multiplication before addition")
+	@DisplayName("ConvertToRpn Multiplication before addition")
 	void testPriority1() {
-		Deque<String> result = calculator.convertInRPN("2+3*4");
+		Deque<String> result = calculator.convertToRPN("2+3*4");
 		Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "4", "*", "+"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Division before subtraction")
+	@DisplayName("ConvertToRpn Division before subtraction")
 	void testPriority2() {
-		Deque<String> result = calculator.convertInRPN("10-6/2");
+		Deque<String> result = calculator.convertToRPN("10-6/2");
 		Deque<String> expected = new ArrayDeque<>(List.of("10", "6", "2", "/", "-"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Multiple operations")
+	@DisplayName("ConvertToRpn Multiple operations")
 	void testMultipleOps() {
-		Deque<String> result = calculator.convertInRPN("2+3*4-5/2");
+		Deque<String> result = calculator.convertToRPN("2+3*4-5/2");
 		Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "4", "*", "+", "5", "2", "/", "-"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Same priority left to right")
+	@DisplayName("ConvertToRpn Same priority left to right")
 	void testSamePriority() {
-		Deque<String> result = calculator.convertInRPN("2+3+4");
+		Deque<String> result = calculator.convertToRPN("2+3+4");
 		Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "+", "4", "+"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("With spaces")
+	@DisplayName("ConvertToRpn With spaces")
 	void testWithSpaces() {
-		Deque<String> result = calculator.convertInRPN(" 2 + 3 * 4 ");
+		Deque<String> result = calculator.convertToRPN(" 2 + 3 * 4 ");
 		Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "4", "*", "+"));
 		assertEquals(expected, result);
 	}
 
 	@Test
-	@DisplayName("Multi-digit numbers")
+	@DisplayName("ConvertToRpn Multi-digit numbers")
 	void testMultiDigit() {
-		Deque<String> result = calculator.convertInRPN("12+34*56");
+		Deque<String> result = calculator.convertToRPN("12+34*56");
 		Deque<String> expected = new ArrayDeque<>(List.of("12", "34", "56", "*", "+"));
 		assertEquals(expected, result);
 	}
