@@ -53,7 +53,10 @@ public class CalcServiceImpl implements CalcService{
                 res.addLast(last + symbol);
             } else if (symbol == '-' || symbol == '+' || symbol == '*' || symbol == '/') {
                 flag = false;
-                if (priority.getOrDefault(stack.peek(), 0) >= priority.getOrDefault(symbol, 0)) res.push(stack.pop()+"");
+                while (!stack.isEmpty() &&
+                        priority.getOrDefault(stack.peek(), 0) >= priority.getOrDefault(symbol, 0)) {
+                    res.addLast(String.valueOf(stack.pop()));
+                }
                 stack.push(symbol);
             } else {
                 flag = true;
