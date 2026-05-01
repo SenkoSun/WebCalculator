@@ -72,6 +72,22 @@ public class CalcServiceImpl implements CalcService{
         if (rpn.isEmpty()) {
             return "≽^•⩊•^≼";
         }
-        return "";
+        Deque<Double> stack = new ArrayDeque<>();
+        for (String token : rpn) {
+            if (token.matches("-?\\d+(\\.\\d+)?")) {
+                stack.push(Double.parseDouble(token));
+            } else {
+                double b = stack.pop();
+                double a = stack.pop();
+                switch (token) {
+                    case "+": stack.push(a + b); break;
+                    case "-": stack.push(a - b); break;
+                    case "*": stack.push(a * b); break;
+                    case "/": if (b == 0) return "Division by zero"; stack.push(a / b); break;
+                    default: return "ERROR";
+                }
+            }
+        }
+        return String.valueOf(stack.pop());
     }
 }
