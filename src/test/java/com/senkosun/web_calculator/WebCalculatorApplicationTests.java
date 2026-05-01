@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 
@@ -104,7 +105,7 @@ class WebCalculatorApplicationTests {
 		void testSingleNumber() {
 			Deque<String> result = calculator.convertToRPN("42");
 			Deque<String> expected = new ArrayDeque<>(List.of("42"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -112,7 +113,7 @@ class WebCalculatorApplicationTests {
 		void testAddition() {
 			Deque<String> result = calculator.convertToRPN("2+3");
 			Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "+"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -120,7 +121,7 @@ class WebCalculatorApplicationTests {
 		void testSubtraction() {
 			Deque<String> result = calculator.convertToRPN("5-2");
 			Deque<String> expected = new ArrayDeque<>(List.of("5", "2", "-"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -128,7 +129,7 @@ class WebCalculatorApplicationTests {
 		void testMultiplication() {
 			Deque<String> result = calculator.convertToRPN("4*3");
 			Deque<String> expected = new ArrayDeque<>(List.of("4", "3", "*"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -136,7 +137,7 @@ class WebCalculatorApplicationTests {
 		void testDivision() {
 			Deque<String> result = calculator.convertToRPN("10/2");
 			Deque<String> expected = new ArrayDeque<>(List.of("10", "2", "/"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -144,7 +145,7 @@ class WebCalculatorApplicationTests {
 		void testPriority1() {
 			Deque<String> result = calculator.convertToRPN("2+3*4");
 			Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "4", "*", "+"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -152,7 +153,7 @@ class WebCalculatorApplicationTests {
 		void testPriority2() {
 			Deque<String> result = calculator.convertToRPN("10-6/2");
 			Deque<String> expected = new ArrayDeque<>(List.of("10", "6", "2", "/", "-"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -160,7 +161,7 @@ class WebCalculatorApplicationTests {
 		void testMultipleOps() {
 			Deque<String> result = calculator.convertToRPN("2+3*4-5/2");
 			Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "4", "*", "+", "5", "2", "/", "-"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -168,7 +169,7 @@ class WebCalculatorApplicationTests {
 		void testSamePriority() {
 			Deque<String> result = calculator.convertToRPN("2+3+4");
 			Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "+", "4", "+"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -176,7 +177,7 @@ class WebCalculatorApplicationTests {
 		void testWithSpaces() {
 			Deque<String> result = calculator.convertToRPN(" 2 + 3 * 4 ");
 			Deque<String> expected = new ArrayDeque<>(List.of("2", "3", "4", "*", "+"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
 		}
 
 		@Test
@@ -184,7 +185,12 @@ class WebCalculatorApplicationTests {
 		void testMultiDigit() {
 			Deque<String> result = calculator.convertToRPN("12+34*56");
 			Deque<String> expected = new ArrayDeque<>(List.of("12", "34", "56", "*", "+"));
-			assertEquals(expected, result);
+			assertDequeEquals(expected, result);
+		}
+
+		// Вспомогательный метод для сравнения Deque
+		private void assertDequeEquals(Deque<String> expected, Deque<String> actual) {
+			assertEquals(new ArrayList<>(expected), new ArrayList<>(actual));
 		}
 	}
 
