@@ -1,6 +1,9 @@
 package com.senkosun.web_calculator.service;
 
+import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CalcServiceImpl implements CalcService{
     @Override
@@ -32,11 +35,43 @@ public class CalcServiceImpl implements CalcService{
 
     @Override
     public Deque<String> convertToRPN(String expression) {
-        return null;
+
+        Map<Character, Integer> priority = new HashMap<>(Map.of(
+                '+', 1,
+                '-', 1,
+                '*', 2,
+                '/', 2
+        ));
+        Deque<Character> stack = new ArrayDeque<>();
+        Deque<String> res = new ArrayDeque<>();
+        String expr = expression.replaceAll("\\s", "");
+        boolean flag = false;
+        for (int i = 0; i < expr.length(); i++) {
+            char symbol = expr.charAt(i);
+            if (symbol == '.' || (flag && Character.isDigit(symbol))) {
+                String last = res.isEmpty() ? "" : res.removeLast();
+                res.addLast(last + symbol);
+            } else if (symbol == '-' || symbol == '+' || symbol == '*' || symbol == '/') {
+                flag = false;
+                if (priority.getOrDefault(stack.peek(), 0) >= priority.getOrDefault(symbol, 0)) res.push(stack.pop()+"");
+                stack.push(symbol);
+            } else {
+                flag = true;
+                res.addLast(symbol+"");
+            }
+        }
+        while (!stack.isEmpty()) {
+            res.addLast(stack.pop()+"");
+        }
+        return res;
+
     }
 
     @Override
     public String calculate(Deque<String> rpn) {
+        if (rpn.isEmpty()) {
+            return "≽^•⩊•^≼";
+        }
         return "";
     }
 }
