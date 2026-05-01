@@ -22,8 +22,8 @@ public class MyController {
 
     @GetMapping("/")
     public String Calculate(Model model) {
-
         model.addAttribute("expression", "");
+        model.addAttribute("needReset", "false");
 
         return "calculator";
     }
@@ -32,9 +32,11 @@ public class MyController {
     public String calculate(@RequestParam("expression") String expression, Model model) {
         if (calcService.validate(expression)) {
             String result = calcService.calculate(calcService.convertToRPN(expression));
-            model.addAttribute("expression", result); // кладем РЕЗУЛЬТАТ в поле
+            model.addAttribute("expression", result);
+            model.addAttribute("needReset", "false");
         } else {
             model.addAttribute("expression", "ERROR");
+            model.addAttribute("needReset", "true");
         }
         return "calculator"; // возвращаем ту же страницу
     }

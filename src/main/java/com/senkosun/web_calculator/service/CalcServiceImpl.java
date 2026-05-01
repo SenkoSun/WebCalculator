@@ -94,6 +94,8 @@ public class CalcServiceImpl implements CalcService{
                 }
             }
         }
-        return String.valueOf(stack.pop());
+        double res = stack.pop();
+        if (res == (long) res) return String.valueOf((long) res);
+        return String.valueOf(res);
     }
 }
