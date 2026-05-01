@@ -179,4 +179,93 @@ class WebCalculatorApplicationTests {
 
 
 
+
+
+	@Test
+	@DisplayName("Calculate Single number")
+	void testCalcSingleNumber() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("42"));
+		String result = calculator.calculate(rpn);
+		assertEquals("42", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Addition")
+	void testCalcAddition() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("2", "3", "+"));
+		String result = calculator.calculate(rpn);
+		assertEquals("5", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Subtraction")
+	void testCalcSubtraction() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("5", "2", "-"));
+		String result = calculator.calculate(rpn);
+		assertEquals("3", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Multiplication")
+	void testCalcMultiplication() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("4", "3", "*"));
+		String result = calculator.calculate(rpn);
+		assertEquals("12", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Division")
+	void testCalcDivision() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("10", "2", "/"));
+		String result = calculator.calculate(rpn);
+		assertEquals("5", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Division with remainder")
+	void testDivisionRemainder() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("7", "2", "/"));
+		String result = calculator.calculate(rpn);
+		assertEquals("3", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Multiple operations")
+	void testCalcMultipleOps() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("2", "3", "4", "*", "+"));
+		String result = calculator.calculate(rpn);
+		assertEquals("14", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Complex expression")
+	void testCalcComplex() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("2", "3", "4", "*", "+", "5", "2", "/", "-"));
+		String result = calculator.calculate(rpn);
+		assertEquals("12", result);
+	}
+
+	@Test
+	@DisplayName("Calculate Division by zero throws exception")
+	void testCalcDivisionByZero() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("10", "0", "/"));
+		Exception exception = assertThrows(ArithmeticException.class, () -> {
+			calculator.calculate(rpn);
+		});
+		assertEquals("Division by zero", exception.getMessage());
+	}
+
+	@Test
+	@DisplayName("Calculate Division by zero in complex expression")
+	void testCalcDivisionByZeroComplex() {
+		Deque<String> rpn = new ArrayDeque<>(List.of("5", "0", "/", "3", "+"));
+		Exception exception = assertThrows(ArithmeticException.class, () -> {
+			calculator.calculate(rpn);
+		});
+		assertEquals("Division by zero", exception.getMessage());
+	}
+
+
+
+
 }
