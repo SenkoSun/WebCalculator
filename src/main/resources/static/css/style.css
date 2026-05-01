@@ -1,0 +1,212 @@
+:root {
+    --font-family-inter: 'Inter', sans-serif;
+    --text-white: rgba(255, 255, 255, 1);
+    --text-black: rgba(0, 0, 0, 1);
+    --bg-dark: #1E1E2E;
+    --button-gray: #D9D9D9;
+    --button-purple: #6C6C8A;
+    --button-orange: #FF5722;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-family-inter);
+    padding: 20px;
+    background: conic-gradient(from 55deg,
+    #FF8F00 0%,      /* желтый начинается справа сверху */
+    #FF6F00 20%,
+    #FF5722 40%,
+    #FF3D00 60%,     /* красно-оранжевый слева снизу */
+    #FF5722 80%,
+    #FF8F00 100%);
+}
+
+/* Контейнер калькулятора */
+.desktop-1-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Сам калькулятор */
+.calculator-2 {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 20px;
+    width: 320px;
+    background-color: var(--bg-dark);
+    border-radius: 24px;
+    box-shadow: 0px 20px 35px -10px rgba(0,0,0,0.5);
+}
+
+/* Дисплей */
+.display-3 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 15px;
+    width: 100%;
+    background-color: #2D2D44;
+    border-radius: 16px;
+    margin-bottom: 10px;
+}
+
+.display-input {
+    width: 100%;
+    font-family: var(--font-family-inter);
+    font-weight: 700;
+    font-size: 32px;
+    text-align: right;
+    background: transparent;
+    border: none;
+    color: var(--text-white);
+    padding: 0;
+}
+
+.display-input:focus {
+    outline: none;
+}
+
+/* Ряды кнопок */
+.row-5, .row-14, .row-23, .row-32 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    width: 100%;
+}
+
+/* Все кнопки */
+button, .button-6, .button-8, .button-10, .button-12,
+.button-15, .button-17, .button-19, .button-21,
+.button-24, .button-26, .button-28, .button-30,
+.button-33, .button-35, .button-37, .button-39,
+.button-42, .button-44 {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px 0;
+    border-radius: 12px;
+    font-family: var(--font-family-inter);
+    font-weight: 700;
+    font-size: 28px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.1s, opacity 0.2s;
+}
+
+button:active, .button-6:active, .button-8:active, .button-10:active,
+.button-12:active, .button-15:active, .button-17:active, .button-19:active,
+.button-21:active, .button-24:active, .button-26:active, .button-28:active,
+.button-30:active, .button-33:active, .button-35:active, .button-37:active,
+.button-39:active, .button-42:active, .button-44:active {
+    transform: scale(0.95);
+}
+
+/* Цвета кнопок */
+.button-6, .button-8, .button-10,
+.button-15, .button-17, .button-19,
+.button-24, .button-26, .button-28,
+.button-33, .button-35, .button-37, .button-39 {
+    background-color: var(--button-gray);
+    color: var(--text-black);
+}
+
+.button-21, .button-30 {
+    background-color: var(--button-gray);
+    color: var(--text-black);
+}
+
+.button-12 {
+    background-color: var(--button-purple);
+    color: var(--text-white);
+}
+
+.button-42 {
+    background-color: var(--button-purple);
+    color: var(--text-white);
+}
+
+.button-44 {
+    background-color: var(--button-orange);
+    color: var(--text-black);
+    padding: 0;
+}
+
+/* Стили для текста внутри кнопок */
+.text-7, .text-9, .text-11, .text-13,
+.text-16, .text-18, .text-20, .text-22,
+.text-25, .text-27, .text-29, .text-31,
+.text-34, .text-36, .text-38, .text-40,
+.text-43, .text-45 {
+    font-family: var(--font-family-inter);
+    font-weight: 700;
+    font-size: 28px;
+    margin: 0;
+    display: inline-block;
+    pointer-events: none;
+}
+
+.text-white {
+    color: var(--text-white);
+}
+
+.text-black {
+    color: var(--text-black);
+}
+
+/* Контейнер для RESET и = */
+.frame-1-41 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.equal-button-native {
+    all: unset;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Мобильная адаптация */
+@media (max-width: 400px) {
+    .calculator-2 {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    button, .button-6, .button-8, .button-10, .button-12,
+    .button-15, .button-17, .button-19, .button-21,
+    .button-24, .button-26, .button-28, .button-30,
+    .button-33, .button-35, .button-37, .button-39,
+    .button-42, .button-44 {
+        font-size: 24px;
+        padding: 12px 0;
+    }
+
+    .text-7, .text-9, .text-11, .text-13,
+    .text-16, .text-18, .text-20, .text-22,
+    .text-25, .text-27, .text-29, .text-31,
+    .text-34, .text-36, .text-38, .text-40,
+    .text-43, .text-45 {
+        font-size: 24px;
+    }
+}
