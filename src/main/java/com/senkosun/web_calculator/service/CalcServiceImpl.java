@@ -1,10 +1,13 @@
 package com.senkosun.web_calculator.service;
 
+import org.springframework.stereotype.Service;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class CalcServiceImpl implements CalcService{
     @Override
     public boolean validate(String expr) {

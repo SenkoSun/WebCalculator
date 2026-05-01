@@ -1,25 +1,42 @@
 package com.senkosun.web_calculator.controller;
 
+import com.senkosun.web_calculator.service.CalcService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Controller  // ВАЖНО: @Controller, а не @RestController!
+@Controller
 public class MyController {
 
-    @GetMapping("/")
-    public String hello(Model model) {
-        // Добавляем данные в модель
-        model.addAttribute("title", "Hello World!");
-        model.addAttribute("message", "Добро пожаловать в Spring Boot с Thymeleaf!");
-        model.addAttribute(
-                "serverTime",
-                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"))
-        );
+    private final CalcService calcService;
 
-        // Возвращаем имя html файла (без расширения)
-        return "hello";
+    @Autowired
+    public MyController(CalcService calcService) {
+        this.calcService = calcService;
     }
+
+    @GetMapping("/")
+    public String Calculate(Model model) {
+
+        model.addAttribute("expression", "");
+
+        return "calculator";
+    }
+
+    @PostMapping("/calculate")
+    public String calculate(@RequestParam("expression") String expression, Model model) {
+        if (calcService.validate(expression)) {
+            String result = calcService.calculate(calcService.convertToRPN(expression));
+            model.addAttribute("expression", result); // кладем РЕЗУЛЬТАТ в поле
+        } else {
+            model.addAttribute("expression", "ERROR");
+        }
+        return "calculator"; // возвращаем ту же страницу
+    }
+
 }
