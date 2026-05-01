@@ -88,6 +88,11 @@ class WebCalculatorApplicationTests {
 		assertFalse(calculator.validate("*1+2*4"));
 	}
 
+
+
+
+
+
 	@Test
 	@DisplayName("ConvertToRpn Single number")
 	void testSingleNumber() {
@@ -180,7 +185,6 @@ class WebCalculatorApplicationTests {
 
 
 
-
 	@Test
 	@DisplayName("Calculate Single number")
 	void testCalcSingleNumber() {
@@ -264,8 +268,4 @@ class WebCalculatorApplicationTests {
 		});
 		assertEquals("Division by zero", exception.getMessage());
 	}
-
-
-
-
 }
