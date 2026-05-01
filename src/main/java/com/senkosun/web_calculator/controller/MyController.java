@@ -32,8 +32,13 @@ public class MyController {
     public String calculate(@RequestParam("expression") String expression, Model model) {
         if (calcService.validate(expression)) {
             String result = calcService.calculate(calcService.convertToRPN(expression));
-            model.addAttribute("expression", result);
-            model.addAttribute("needReset", "false");
+            if (!result.equals("ERROR") && !result.equals("Division by zero") && !result.equals("≽^•⩊•^≼")) {
+                model.addAttribute("expression", result);
+                model.addAttribute("needReset", "false");
+            } else {
+                model.addAttribute("expression", result);
+                model.addAttribute("needReset", "true");
+            }
         } else {
             model.addAttribute("expression", "ERROR");
             model.addAttribute("needReset", "true");

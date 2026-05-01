@@ -2,10 +2,7 @@ package com.senkosun.web_calculator.service;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class CalcServiceImpl implements CalcService{
@@ -31,7 +28,8 @@ public class CalcServiceImpl implements CalcService{
         for (int i = 1; i < clean.length(); i++) {
             char c = clean.charAt(i), p = clean.charAt(i - 1);
             if ((c == '-' || c == '+' || c == '*' || c == '/') && ((p == '+' || p == '*' || p == '/') || p == '-')) return false;
-            if (!Character.isDigit(c) && c != '+' && c != '*' && c != '/' && c != '-') return false;
+            if (c == '.' && p == '.') return false;
+            if (!Character.isDigit(c) && c != '+' && c != '*' && c != '/' && c != '-'&& c != '.') return false;
         }
         return true;
     }
@@ -96,6 +94,10 @@ public class CalcServiceImpl implements CalcService{
         }
         double res = stack.pop();
         if (res == (long) res) return String.valueOf((long) res);
-        return String.valueOf(res);
+        String str_res = String.format(Locale.US, "%.4f", res).replaceAll("0*$", "").replaceAll("\\.$", "");
+        if (str_res.isEmpty() || str_res.equals(".")) {
+            return "0";
+        }
+        return str_res;
     }
 }

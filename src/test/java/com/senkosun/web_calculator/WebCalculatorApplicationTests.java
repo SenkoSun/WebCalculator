@@ -29,6 +29,7 @@ class WebCalculatorApplicationTests {
 		@DisplayName("Validation Addition test")
 		void testRightAdd() {
 			assertTrue(calculator.validate("67"));
+			assertTrue(calculator.validate("2.3 + 2.0"));
 			assertTrue(calculator.validate("2+3"));
 			assertTrue(calculator.validate(" 1 + 4 "));
 			assertTrue(calculator.validate("5 + 6"));
@@ -105,6 +106,14 @@ class WebCalculatorApplicationTests {
 		void testSingleNumber() {
 			Deque<String> result = calculator.convertToRPN("42");
 			Deque<String> expected = new ArrayDeque<>(List.of("42"));
+			assertDequeEquals(expected, result);
+		}
+
+		@Test
+		@DisplayName("ConvertToRpn Fractal Addition")
+		void testAdditionFract() {
+			Deque<String> result = calculator.convertToRPN("2.3 + 2.0");
+			Deque<String> expected = new ArrayDeque<>(List.of("2.3", "2.0", "+"));
 			assertDequeEquals(expected, result);
 		}
 
@@ -208,7 +217,7 @@ class WebCalculatorApplicationTests {
 		void testCalcSingleNumber() {
 			Deque<String> rpn = new ArrayDeque<>(List.of("42"));
 			String result = calculator.calculate(rpn);
-			assertEquals("42.0", result);
+			assertEquals("42", result);
 		}
 
 		@Test
@@ -216,7 +225,15 @@ class WebCalculatorApplicationTests {
 		void testCalcAddition() {
 			Deque<String> rpn = new ArrayDeque<>(List.of("2", "3", "+"));
 			String result = calculator.calculate(rpn);
-			assertEquals("5.0", result);
+			assertEquals("5", result);
+		}
+
+		@Test
+		@DisplayName("Calculate Fractal Addition")
+		void testCalcFractAddition() {
+			Deque<String> rpn = new ArrayDeque<>(List.of("2.3", "2.0", "+"));
+			String result = calculator.calculate(rpn);
+			assertEquals("4.3", result);
 		}
 
 		@Test
@@ -224,7 +241,7 @@ class WebCalculatorApplicationTests {
 		void testCalcSubtraction() {
 			Deque<String> rpn = new ArrayDeque<>(List.of("5", "2", "-"));
 			String result = calculator.calculate(rpn);
-			assertEquals("3.0", result);
+			assertEquals("3", result);
 		}
 
 		@Test
@@ -232,7 +249,7 @@ class WebCalculatorApplicationTests {
 		void testCalcMultiplication() {
 			Deque<String> rpn = new ArrayDeque<>(List.of("4", "3", "*"));
 			String result = calculator.calculate(rpn);
-			assertEquals("12.0", result);
+			assertEquals("12", result);
 		}
 
 		@Test
@@ -240,7 +257,7 @@ class WebCalculatorApplicationTests {
 		void testCalcDivision() {
 			Deque<String> rpn = new ArrayDeque<>(List.of("10", "2", "/"));
 			String result = calculator.calculate(rpn);
-			assertEquals("5.0", result);
+			assertEquals("5", result);
 		}
 
 		@Test
@@ -256,7 +273,7 @@ class WebCalculatorApplicationTests {
 		void testCalcMultipleOps() {
 			Deque<String> rpn = new ArrayDeque<>(List.of("2", "3", "4", "*", "+"));
 			String result = calculator.calculate(rpn);
-			assertEquals("14.0", result);
+			assertEquals("14", result);
 		}
 
 		@Test
