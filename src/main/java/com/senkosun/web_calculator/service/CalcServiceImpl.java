@@ -24,6 +24,9 @@ public class CalcServiceImpl implements CalcService{
         // Если первый символ минус, проверяем что после него цифра
         if ((clean.charAt(0) == '-' || clean.charAt(0) == '+') && !Character.isDigit(clean.charAt(1))) return false;
 
+        // Проверка на 2 точки в одном числе
+        if (!clean.matches("^[+-]?\\d+(\\.\\d+)?([+\\-*/][+-]?\\d+(\\.\\d+)?)*$")) return false;
+
         // Проверка последовательности: не должно быть двух операторов подряд
         for (int i = 1; i < clean.length(); i++) {
             char c = clean.charAt(i), p = clean.charAt(i - 1);
@@ -31,9 +34,6 @@ public class CalcServiceImpl implements CalcService{
             if (c == '.' && p == '.') return false;
             if (!Character.isDigit(c) && c != '+' && c != '*' && c != '/' && c != '-'&& c != '.') return false;
         }
-
-        // Проверка на 2 точки в одном числе
-        if (!clean.matches("^[+-]?\\d+(\\.\\d+)?([+\\-*/][+-]?\\d+(\\.\\d+)?)*$")) return false;
 
         return true;
     }
