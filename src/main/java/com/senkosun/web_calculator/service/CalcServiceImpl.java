@@ -18,11 +18,11 @@ public class CalcServiceImpl implements CalcService{
         String clean = expr.replaceAll("\\s", "");
 
         // Проверка: первый символ (цифра или минус), последний (цифра)
-        if ((!Character.isDigit(clean.charAt(0)) && clean.charAt(0) != '-')
+        if ((!Character.isDigit(clean.charAt(0)) && clean.charAt(0) != '-' && clean.charAt(0) != '+')
                 || !Character.isDigit(clean.charAt(clean.length() - 1))) return false;
 
         // Если первый символ минус, проверяем что после него цифра
-        if (clean.charAt(0) == '-' && !Character.isDigit(clean.charAt(1))) return false;
+        if ((clean.charAt(0) == '-' || clean.charAt(0) == '+') && !Character.isDigit(clean.charAt(1))) return false;
 
         // Проверка последовательности: не должно быть двух операторов подряд
         for (int i = 1; i < clean.length(); i++) {
@@ -31,6 +31,10 @@ public class CalcServiceImpl implements CalcService{
             if (c == '.' && p == '.') return false;
             if (!Character.isDigit(c) && c != '+' && c != '*' && c != '/' && c != '-'&& c != '.') return false;
         }
+
+        // Проверка на 2 точки в одном числе
+        if (!clean.matches("^[+-]?\\d+(\\.\\d+)?([+\\-*/][+-]?\\d+(\\.\\d+)?)*$")) return false;
+
         return true;
     }
 
@@ -49,6 +53,13 @@ public class CalcServiceImpl implements CalcService{
         boolean flag = false;
         for (int i = 0; i < expr.length(); i++) {
             char symbol = expr.charAt(i);
+
+            if ((symbol == '-' || symbol == '+') && i == 0) {
+                flag = true;
+                if (symbol == '-') res.addLast("" + symbol);
+                continue;
+            }
+
             if (symbol == '.' || (flag && Character.isDigit(symbol))) {
                 String last = res.isEmpty() ? "" : res.removeLast();
                 res.addLast(last + symbol);

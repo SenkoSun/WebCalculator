@@ -36,6 +36,8 @@ class WebCalculatorApplicationTests {
 			assertTrue(calculator.validate(" 7+8 "));
 			assertTrue(calculator.validate("9+ 10"));
 			assertTrue(calculator.validate("121141 +0"));
+			assertTrue(calculator.validate("+5 - 3"));
+			assertTrue(calculator.validate("-4 + 2"));
 		}
 
 		@Test
@@ -91,6 +93,7 @@ class WebCalculatorApplicationTests {
 			assertFalse(calculator.validate("533--4"));
 			assertFalse(calculator.validate("--1--2+3"));
 			assertFalse(calculator.validate("*1+2*4"));
+			assertFalse(calculator.validate("5.6.7"));
 		}
 	}
 
@@ -130,6 +133,22 @@ class WebCalculatorApplicationTests {
 		void testSubtraction() {
 			Deque<String> result = calculator.convertToRPN("5-2");
 			Deque<String> expected = new ArrayDeque<>(List.of("5", "2", "-"));
+			assertDequeEquals(expected, result);
+		}
+
+		@Test
+		@DisplayName("ConvertToRpn Marks Subtraction")
+		void testSubtractionMarks() {
+			Deque<String> result = calculator.convertToRPN("+8 - 5");
+			Deque<String> expected = new ArrayDeque<>(List.of("8", "5", "-"));
+			assertDequeEquals(expected, result);
+		}
+
+		@Test
+		@DisplayName("ConvertToRpn Marks Subtraction Minus")
+		void testSubtractionMarksMinus() {
+			Deque<String> result = calculator.convertToRPN("-8 - 5");
+			Deque<String> expected = new ArrayDeque<>(List.of("-8", "5", "-"));
 			assertDequeEquals(expected, result);
 		}
 
@@ -234,6 +253,14 @@ class WebCalculatorApplicationTests {
 			Deque<String> rpn = new ArrayDeque<>(List.of("2.3", "2.0", "+"));
 			String result = calculator.calculate(rpn);
 			assertEquals("4.3", result);
+		}
+
+		@Test
+		@DisplayName("Calculate Marks Addition")
+		void testCalcMarksAdditionZn() {
+			Deque<String> rpn = new ArrayDeque<>(List.of("-5", "3", "+"));
+			String result = calculator.calculate(rpn);
+			assertEquals("-2", result);
 		}
 
 		@Test
